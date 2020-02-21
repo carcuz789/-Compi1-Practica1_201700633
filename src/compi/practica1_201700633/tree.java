@@ -108,7 +108,7 @@ String concatenar="",con="";
             }
             preOrder(root.left);
             // System.out.printf("%d ", root.value);            
-            concatenar+=root.num+"[shape=record, label=\"<C0>| nombre : "+root.value+"\n contenido :"+root.value+"|<C1>\"];\n";
+            concatenar+=root.num+"[label= \" "+root.value.replace("\"", "")+"\"];\n";
             
             preOrder(root.right);
         }
@@ -150,24 +150,6 @@ String concatenar="",con="";
         
     }
 
-//	public static void main(String args[]) { 
-//
-//		tree et = new tree(); 
-//                System.out.println("pre"); 
-//		String pre = "......*|AK+CM+CE|TFP";
-//                System.out.println(pre); 
-//                System.out.println("----------------"); 
-//                System.out.println("post"); 
-//               // String post =   GFG.preToPost(postfix);
-//               // System.out.println(post); 
-//		char[] charArray = pre.toCharArray();
-//                
-//	//	Noder root = et.constructTree(charArray); 
-//		System.out.println("infix expression is"); 
-//		
-//                et.ImprimirArbolin(root);
-//
-//	} 
 } 
 
 // This code has been contributed by Mayank Jaiswal 
