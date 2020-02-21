@@ -3,8 +3,15 @@ package compi.practica1_201700633;
 
 import compi.practica1_201700633.AnalizadorLexico;
 import compi.practica1_201700633.DLL;
+import java.awt.Image;
 import java.io.*;
+import java.util.ArrayList;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import javax.swing.tree.TreeNode;
+import javax.swing.tree.TreePath;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -88,9 +95,14 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
             }
         });
 
+        javax.swing.tree.DefaultMutableTreeNode treeNode1 = new javax.swing.tree.DefaultMutableTreeNode("Componentes");
+        jTree1.setModel(new javax.swing.tree.DefaultTreeModel(treeNode1));
+        jTree1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTree1MouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jTree1);
-
-        jLabel2.setText("jLabel2");
 
         jTextArea2.setColumns(20);
         jTextArea2.setRows(5);
@@ -195,6 +207,12 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
             AnalizadorLexico.Analizar(cadena);
             JOptionPane.showMessageDialog(null, "Analisis lexico exitoso");
             Principal.ListaGen.printlist(Principal.ListaGen.head);
+            ListaGen.MandarAliststas(ListaGen.head);
+             System.out.println("T---------n"); 
+            this.lis(ListaExpresiones.head);
+            for (int i = 0; i < 10; i++) {
+                
+            }
         }catch(Exception e){
             JOptionPane.showMessageDialog(null, "no se realizo el analisis lexico");
         }
@@ -202,6 +220,26 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
         
         
     }//GEN-LAST:event_btnAnalizarEntradaActionPerformed
+
+    private void jTree1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTree1MouseClicked
+        // TODO add your handling code here:
+        try{
+         DefaultMutableTreeNode node = (DefaultMutableTreeNode)
+        this.jTree1.getLastSelectedPathComponent();
+        node=(DefaultMutableTreeNode) this.jTree1.getLastSelectedPathComponent();
+        String seleccion =  node.getUserObject().toString();
+        JOptionPane.showMessageDialog(null, seleccion);
+         ArrayList<String> listamandar = RetornarLisArb(ListaExpresiones.head, seleccion);
+         tree et = new tree();                
+	Noder root = et.constructTree(listamandar); 		
+        et.ImprimirArbolin(root);
+        ImageIcon arbl =new ImageIcon("/home/rodrigo/NetBeansProjects/[Compi]Practica1_201700633/AVL.jpg");
+        ImageIcon ico =new ImageIcon(arbl.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT));
+        this.jLabel2.setIcon(ico);
+        
+        }catch(Exception ex){}
+       
+    }//GEN-LAST:event_jTree1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -254,4 +292,64 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
     private javax.swing.JTree jTree1;
     private javax.swing.JTextArea txtEntrada;
     // End of variables declaration//GEN-END:variables
+//private TreePath getTreePath(TreeNode node) {
+//    DefaultTreeModel model = (DefaultTreeModel) this.jTree1.getModel();
+//    TreeNode[] nodes = model.getPathToRoot(node); 
+//    TreePath path = new TreePath(nodes); 
+//    return path; 
+//} 
+ public void lis(ListaExpresiones.NodExp node) 
+    { 
+        
+        ListaExpresiones.NodExp last = null; 
+        System.out.println("Traversal in forward Direction"); 
+        DefaultMutableTreeNode root = (DefaultMutableTreeNode) jTree1.getModel().getRoot();
+           DefaultMutableTreeNode c1 = new DefaultMutableTreeNode("Arboles");
+        while (node != null) { 
+            System.out.print(node.x + " --- "+node.texto+" ---- "+node.tipo+"\n"); 
+            
+            DefaultMutableTreeNode newnode = new DefaultMutableTreeNode(node.texto);
+            c1.add(newnode);
+           
+            last = node; 
+            node = node.next; 
+        } 
+        root.add(c1);
+         DefaultTreeModel model = (DefaultTreeModel) this.jTree1.getModel();
+            model.reload();
+//        System.out.println(); 
+//        System.out.println("Traversal in reverse direction"); 
+//        while (last != null) { 
+//            System.out.print(last.nombredir + " "+node.usuario+" ->"); 
+//            last = last.prev; 
+//        } 
+    } 
+ public  ArrayList<String>  RetornarLisArb(ListaExpresiones.NodExp node,String nod) 
+    { 
+        
+        ListaExpresiones.NodExp last = null; 
+      boolean entcontrado = false;
+       ArrayList<String> lista=null;
+        while (node != null) { 
+            if (nod.equals(node.texto)) {
+                entcontrado =true;
+                lista = node.carac;
+            }           
+          
+           
+            last = node; 
+            node = node.next; 
+        }
+        if (entcontrado==true) {
+            return lista;
+        }else{
+            return null;
+        }
+//        System.out.println(); 
+//        System.out.println("Traversal in reverse direction"); 
+//        while (last != null) { 
+//            System.out.print(last.nombredir + " "+node.usuario+" ->"); 
+//            last = last.prev; 
+     
+    } 
 }
