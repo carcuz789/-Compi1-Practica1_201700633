@@ -12,6 +12,7 @@ import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
+import java.util.regex.*;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -29,6 +30,8 @@ public static DLL ListaGen= new DLL();
 public static ListaConjuntos ListaConjuntos = new ListaConjuntos();
 public static ListaEntradas ListaEntradas = new ListaEntradas();
 public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
+ public static String listaexparreg = "";
+
     /**
      * Creates new form Principal
      */
@@ -236,7 +239,7 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
         ImageIcon arbl =new ImageIcon("/home/rodrigo/NetBeansProjects/[Compi]Practica1_201700633/AVL.jpg");
         ImageIcon ico =new ImageIcon(arbl.getImage().getScaledInstance(jLabel2.getWidth(), jLabel2.getHeight(), Image.SCALE_DEFAULT));
         this.jLabel2.setIcon(ico);
-        
+        this.validarcadenas(ListaEntradas.head);
         }catch(Exception ex){}
        
     }//GEN-LAST:event_jTree1MouseClicked
@@ -351,5 +354,29 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
 //            System.out.print(last.nombredir + " "+node.usuario+" ->"); 
 //            last = last.prev; 
      
-    } 
+    }
+public void validarcadenas(ListaEntradas.NodEnt node){
+    String conca = "";
+      
+       ListaEntradas.NodEnt last1 = null;
+       String n = "";
+      Pattern patron = Pattern.compile(listaexparreg);
+        while (node != null) { 
+           
+           Matcher encaja = patron.matcher(node.tipo.replace("\"", ""));
+           
+           String resultado = encaja.replaceAll("");
+            if (resultado.length()<node.tipo.length()) {
+             n+=   "la expresion -> "+node.texto+"---- es valida con la expresion regular"+listaexparreg+" result ----- "+resultado+"\n";
+            }
+            node = node.next; 
+        }       
+
+this.jTextArea2.setText(n);
+} 
+
+//public String cadenaArr(){
+//    
+//}
+
 }
