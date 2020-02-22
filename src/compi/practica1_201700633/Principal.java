@@ -415,14 +415,16 @@ public void validarcadenas(ListaEntradas.NodEnt node){
       
        ListaEntradas.NodEnt last1 = null;
        String n = "";
-      Pattern patron = Pattern.compile(listaexparreg);
+      Pattern patron = Pattern.compile("["+listaexparreg+"]+");
         while (node != null) { 
            
            Matcher encaja = patron.matcher(node.tipo.replace("\"", ""));
-           
+          
            String resultado = encaja.replaceAll("");
-            if (resultado.length()<node.tipo.length()) {
-             n+=   "la expresion -> "+node.texto+"---- es valida con la expresion regular"+listaexparreg+" result ----- "+resultado+"\n";
+           
+           
+            if (resultado.equals("")) {
+             n+=   "la expresion -> "+node.texto+"---- es valida con la expresion regular"+listaexparreg+"\n";
             }
             node = node.next; 
         }       
