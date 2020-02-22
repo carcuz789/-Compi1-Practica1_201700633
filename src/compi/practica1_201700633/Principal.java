@@ -13,6 +13,7 @@ import javax.swing.tree.DefaultTreeModel;
 import javax.swing.tree.TreeNode;
 import javax.swing.tree.TreePath;
 import java.util.regex.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -31,7 +32,9 @@ public static ListaConjuntos ListaConjuntos = new ListaConjuntos();
 public static ListaEntradas ListaEntradas = new ListaEntradas();
 public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
  public static String listaexparreg = "";
-
+ public String Path_actual;
+       File guarda ;
+      
     /**
      * Creates new form Principal
      */
@@ -73,8 +76,18 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
         });
 
         btnguardar.setText("Guardar");
+        btnguardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarActionPerformed(evt);
+            }
+        });
 
         btnguardarcomo.setText("Guardar Como");
+        btnguardarcomo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnguardarcomoActionPerformed(evt);
+            }
+        });
 
         btnXml.setText("XML");
 
@@ -244,6 +257,48 @@ public static ListaExpresiones ListaExpresiones = new ListaExpresiones();
        
     }//GEN-LAST:event_jTree1MouseClicked
 
+    private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
+        // TODO add your handling code here:
+         try{
+       
+   
+
+       if(guarda != null){
+      try (
+      /*guardamos el archivo y le damos el formato directamente*/
+          FileWriter save = new FileWriter(guarda+".txt")) {
+           Path_actual = guarda+".txt";    
+          save.write(this.txtEntrada.getText());
+      }
+       }
+   }catch(IOException ex){
+   JOptionPane.showMessageDialog(null,"Su archivo no se ha guardado",
+   "Advertencia",JOptionPane.WARNING_MESSAGE);}   
+  
+    }//GEN-LAST:event_btnguardarActionPerformed
+
+    private void btnguardarcomoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarcomoActionPerformed
+       try{
+       JFileChooser filechooser = new JFileChooser();
+       FileNameExtensionFilter filter = new FileNameExtensionFilter("Archivos de texto", "txt", "gcode","df");
+       filechooser.setFileFilter(filter);
+       filechooser.showSaveDialog(filechooser);
+        guarda = filechooser.getSelectedFile();
+
+       if(guarda != null){
+      try (
+      /*guardamos el archivo y le damos el formato directamente*/
+          FileWriter save = new FileWriter(guarda+".txt")) {
+           Path_actual = guarda+".txt";    
+          save.write(this.txtEntrada.getText());
+      }
+       }
+   }catch(IOException ex){
+   JOptionPane.showMessageDialog(null,"Su archivo no se ha guardado",
+   "Advertencia",JOptionPane.WARNING_MESSAGE);}   
+  
+    }//GEN-LAST:event_btnguardarcomoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -375,8 +430,6 @@ public void validarcadenas(ListaEntradas.NodEnt node){
 this.jTextArea2.setText(n);
 } 
 
-//public String cadenaArr(){
-//    
-//}
+
 
 }
